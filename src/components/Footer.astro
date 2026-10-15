@@ -1,13 +1,11 @@
 ---
+import { profile } from "../data/profile";
+
 const year = new Date().getFullYear();
 
-/*
- * Fase 1: el nombre, la ciudad y los enlaces viven aquí porque el plan pide
- * crear el Footer en esta fase. En la Fase 2 pasan a src/data/profile.ts.
- */
 const socialLinks = [
-  { href: "https://github.com/jasserav7", label: "GitHub" },
-  { href: "https://www.linkedin.com/in/jasser-arrieta-784406322/", label: "LinkedIn" },
+  { href: profile.github, label: "GitHub" },
+  { href: profile.linkedin, label: "LinkedIn" },
 ];
 ---
 
@@ -15,7 +13,7 @@ const socialLinks = [
   <div
     class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-sm text-muted md:flex-row md:items-center md:justify-between md:px-6"
   >
-    <p>© {year} Jasser Arrieta Villa · Barranquilla, Colombia</p>
+    <p>© {year} {profile.name} · {profile.location}</p>
     <ul class="flex gap-6">
       {
         socialLinks.map((link) => (

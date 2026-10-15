@@ -1,4 +1,6 @@
 ---
+import { profile } from "../data/profile";
+
 const navItems = [
   { href: "#inicio", label: "Inicio" },
   { href: "#sobre-mi", label: "Sobre mí" },
@@ -11,7 +13,7 @@ const navItems = [
 <header class="fixed inset-x-0 top-0 z-40 border-b border-border bg-bg/80 backdrop-blur-sm">
   <div class="mx-auto flex min-h-16 max-w-6xl flex-wrap items-center gap-y-2 px-4 md:px-6">
     <a href="#inicio" class="font-display text-lg font-semibold tracking-tight text-text">
-      Jasser<span class="text-accent" aria-hidden="true">.</span>
+      {profile.shortName}<span class="text-accent" aria-hidden="true">.</span>
     </a>
 
     <button

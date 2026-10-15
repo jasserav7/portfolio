@@ -1,0 +1,22 @@
+---
+interface Props {
+  label: string;
+  title: string;
+  headingId?: string;
+  level?: "h1" | "h2";
+  class?: string;
+}
+
+const { label, title, headingId, level = "h2", class: className } = Astro.props;
+const Heading = level;
+---
+
+<div class:list={["flex flex-col gap-3", className]}>
+  <p class="text-xs font-medium tracking-widest text-accent-soft uppercase">{label}</p>
+  <Heading
+    id={headingId}
+    class:list={["font-display font-semibold text-text", level === "h1" ? "text-h1" : "text-h2"]}
+  >
+    {title}
+  </Heading>
+</div>

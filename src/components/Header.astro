@@ -2,17 +2,17 @@
 import { profile } from "../data/profile";
 
 const navItems = [
-  { href: "#inicio", label: "Inicio" },
-  { href: "#sobre-mi", label: "Sobre mí" },
-  { href: "#proyectos", label: "Proyectos" },
-  { href: "#stack", label: "Stack" },
-  { href: "#contacto", label: "Contacto" },
+  { href: "/#inicio", label: "Inicio" },
+  { href: "/#sobre-mi", label: "Sobre mí" },
+  { href: "/#proyectos", label: "Proyectos" },
+  { href: "/#stack", label: "Stack" },
+  { href: "/#contacto", label: "Contacto" },
 ];
 ---
 
 <header class="fixed inset-x-0 top-0 z-40 border-b border-border bg-bg/80 backdrop-blur-sm">
   <div class="mx-auto flex min-h-16 max-w-6xl flex-wrap items-center gap-y-2 px-4 md:px-6">
-    <a href="#inicio" class="font-display text-lg font-semibold tracking-tight text-text">
+    <a href="/#inicio" class="font-display text-lg font-semibold tracking-tight text-text">
       {profile.brandName}<span class="text-accent" aria-hidden="true">.</span>
     </a>
 

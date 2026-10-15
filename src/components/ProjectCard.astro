@@ -17,11 +17,13 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, tagline, description, stack, repoUrl, demoUrl, image, imageAlt, featured } =
+const { slug, title, tagline, description, stack, repoUrl, demoUrl, image, imageAlt, featured, caseStudy } =
   project;
 
 const linkClass =
   "inline-flex min-h-11 items-center gap-1 text-sm font-medium text-accent-soft transition-colors duration-150 hover:text-text";
+const caseStudyClass =
+  "inline-flex min-h-11 items-center gap-1 text-sm font-medium text-text transition-colors duration-150 hover:text-accent-soft";
 ---
 
 <article
@@ -58,6 +60,14 @@ const linkClass =
     </ul>
 
     <div class="mt-auto flex flex-wrap items-center gap-6 pt-1">
+      {
+        caseStudy && (
+          <a href={`/proyectos/${slug}/`} class={caseStudyClass}>
+            Caso de estudio<span class="sr-only"> de {title}</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        )
+      }
       {
         demoUrl && (
           <a href={demoUrl} class={linkClass} target="_blank" rel="noopener noreferrer">

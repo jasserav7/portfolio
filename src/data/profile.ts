@@ -10,6 +10,7 @@ export interface QuickFact {
 
 export interface Profile {
   name: string;
+  brandName: string;
   shortName: string;
   role: string;
   greeting: string;
@@ -26,6 +27,7 @@ export interface Profile {
 
 export const profile: Profile = {
   name: "Jasser Arrieta Villa",
+  brandName: "Jasser Arrieta Villa",
   shortName: "Jasser",
   role: "Desarrollador de Software Full-Stack",
   greeting: "Hola, soy",

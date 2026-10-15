@@ -1,0 +1,26 @@
+---
+/**
+ * Projects section — docs/03-CONTENIDO.md (sección 3) and docs/04-PROYECTOS.md.
+ * Featured project first, two columns on desktop.
+ */
+import SectionHeading from "./SectionHeading.astro";
+import ProjectCard from "./ProjectCard.astro";
+import { projects } from "../data/projects";
+---
+
+<section id="proyectos" aria-labelledby="proyectos-titulo" class="scroll-mt-24 py-20 md:py-28">
+  <div class="mx-auto max-w-6xl px-4 md:px-6">
+    <SectionHeading
+      label="Proyectos"
+      title="Lo que he construido"
+      headingId="proyectos-titulo"
+    />
+    <p class="mt-5 max-w-prose text-muted">
+      Cada proyecto incluye su código y, cuando existe, una demo en vivo.
+    </p>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-2">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </div>
+</section>

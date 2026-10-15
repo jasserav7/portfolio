@@ -1,0 +1,79 @@
+---
+/**
+ * Project card — docs/02-DISENO.md (Componentes).
+ * Surface card, 16:9 cropped cover (object-fit: cover, never distorted),
+ * title, tagline, description, stack chips and links. When the project is
+ * featured it keeps the same structure but spans two columns on desktop
+ * (docs/04, "Orden en la página").
+ *
+ * Hover: border --accent and a 2 px lift, disabled when the user prefers
+ * reduced motion (motion-safe) — docs/02 (Componentes, Movimiento).
+ */
+import { Image } from "astro:assets";
+import type { Project } from "../data/projects";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const { title, tagline, description, stack, repoUrl, demoUrl, image, imageAlt, featured } =
+  project;
+
+const linkClass =
+  "inline-flex min-h-11 items-center gap-1 text-sm font-medium text-accent-soft transition-colors duration-150 hover:text-text";
+---
+
+<article
+  class:list={[
+    "flex flex-col overflow-hidden rounded-2xl border border-border bg-surface transition duration-200 hover:border-accent motion-safe:hover:-translate-y-0.5",
+    featured && "md:col-span-2",
+  ]}
+>
+  <div class="aspect-video overflow-hidden bg-surface-2">
+    <Image
+      src={image}
+      alt={imageAlt}
+      widths={[480, 768, 1120]}
+      sizes="(min-width: 768px) 50vw, 100vw"
+      loading="lazy"
+      decoding="async"
+      class="h-full w-full object-cover"
+    />
+  </div>
+
+  <div class="flex flex-1 flex-col gap-5 p-6">
+    <div class="flex flex-col gap-2">
+      <h3 class="font-display text-h3 font-semibold text-text">{title}</h3>
+      <p class="text-sm text-accent-soft">{tagline}</p>
+      <p class="text-muted">{description}</p>
+    </div>
+
+    <ul class="flex flex-wrap gap-2" aria-label={`Tecnologías de ${title}`}>
+      {
+        stack.map((tech) => (
+          <li class="rounded-full bg-surface-2 px-3 py-1 text-sm text-muted">{tech}</li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-auto flex flex-wrap items-center gap-6 pt-1">
+      {
+        demoUrl && (
+          <a href={demoUrl} class={linkClass} target="_blank" rel="noopener noreferrer">
+            Demo<span class="sr-only"> de {title}</span>
+            <span aria-hidden="true" class="text-accent-soft">
+              ↗
+            </span>
+          </a>
+        )
+      }
+      <a href={repoUrl} class={linkClass} target="_blank" rel="noopener noreferrer">
+        Código<span class="sr-only"> de {title} en GitHub</span>
+        <span aria-hidden="true" class="text-accent-soft">
+          ↗
+        </span>
+      </a>
+    </div>
+  </div>
+</article>

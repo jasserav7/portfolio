@@ -4,7 +4,7 @@ import Hero from "../components/Hero.astro";
 import About from "../components/About.astro";
 import Projects from "../components/Projects.astro";
 import Skills from "../components/Skills.astro";
-import SectionHeading from "../components/SectionHeading.astro";
+import Contact from "../components/Contact.astro";
 
 const siteTitle = "Jasser Arrieta — Desarrollador Full-Stack";
 const siteDescription =
@@ -16,15 +16,5 @@ const siteDescription =
   <About />
   <Projects />
   <Skills />
-
-  {/* Fase 4: sección de contacto. */}
-  <section
-    id="contacto"
-    aria-labelledby="contacto-titulo"
-    class="scroll-mt-24 py-20 md:py-28"
-  >
-    <div class="mx-auto max-w-6xl px-4 md:px-6">
-      <SectionHeading label="Contacto" title="¿Hablamos?" headingId="contacto-titulo" />
-    </div>
-  </section>
+  <Contact />
 </Layout>

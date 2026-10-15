@@ -1,0 +1,61 @@
+---
+/**
+ * Stack and formation section — docs/03-CONTENIDO.md (secciones 4 y 5).
+ * Grouped by area, no skill bars or percentages. Base technologies (★) get
+ * more visual weight; the star is decorative for screen readers.
+ */
+import SectionHeading from "./SectionHeading.astro";
+import { skillGroups, education } from "../data/skills";
+---
+
+<section id="stack" aria-labelledby="stack-titulo" class="scroll-mt-24 py-20 md:py-28">
+  <div class="mx-auto max-w-6xl px-4 md:px-6">
+    <SectionHeading label="Stack" title="Con qué trabajo" headingId="stack-titulo" />
+
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        skillGroups.map((group) => (
+          <div class="rounded-2xl border border-border bg-surface p-6">
+            <h3 class="font-display text-h3 font-semibold text-text">{group.area}</h3>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              {group.items.map((item) => (
+                <li
+                  class:list={[
+                    "rounded-full px-3 py-1 text-sm",
+                    item.core
+                      ? "border border-accent/40 bg-surface-2 font-medium text-text"
+                      : "bg-surface-2 text-muted",
+                  ]}
+                >
+                  {item.core && (
+                    <>
+                      <span aria-hidden="true" class="mr-1 text-accent-soft">
+                        ★
+                      </span>
+                      <span class="sr-only">Tecnología base: </span>
+                    </>
+                  )}
+                  {item.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-16">
+      <h3 class="font-display text-h3 font-semibold text-text">Formación</h3>
+      <ul class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {
+          education.map((item) => (
+            <li class="rounded-2xl border border-border bg-surface p-5">
+              <p class="font-medium text-text">{item.title}</p>
+              <p class="mt-1 text-sm text-muted">{item.detail}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

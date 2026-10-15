@@ -1,0 +1,33 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import { profile } from "../data/profile";
+---
+
+<section id="sobre-mi" aria-labelledby="sobre-mi-titulo" class="scroll-mt-24 py-20 md:py-28">
+  <div class="mx-auto max-w-6xl px-4 md:px-6">
+    <SectionHeading
+      label="Sobre mí"
+      title="Un desarrollador que termina lo que empieza"
+      headingId="sobre-mi-titulo"
+    />
+
+    <div class="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-16">
+      <div class="flex max-w-prose flex-col gap-5 text-muted">
+        {profile.aboutParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+
+      <dl class="flex h-fit flex-col gap-5 rounded-2xl border border-border bg-surface p-6">
+        {
+          profile.quickFacts.map((fact) => (
+            <div class="flex flex-col gap-1">
+              <dt class="text-xs font-medium tracking-widest text-accent-soft uppercase">
+                {fact.label}
+              </dt>
+              <dd class="text-sm text-text">{fact.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</section>

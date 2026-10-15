@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — docs/02-DISENO.md
+ * The values are the ones from the document; the variable names are mapped to
+ * the Tailwind v4 theme namespaces so utilities like `bg-surface` or
+ * `text-accent-soft` are generated from them.
+ */
+@theme {
+  /* Colors */
+  --color-bg: #0a0a0b;
+  --color-surface: #111113;
+  --color-surface-2: #17171a;
+  --color-border: #2a1b1d;
+  --color-text: #f4f1f0;
+  --color-muted: #a8a3a3;
+  --color-accent: #b84a52;
+  --color-accent-soft: #d9656d;
+  --color-moon: #e02d2d;
+  --color-glow: rgba(224, 45, 45, 0.35);
+  --color-ambient: #3a0a0c;
+
+  /* Typography */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+
+  /* Fluid type scale — docs/02-DISENO.md */
+  --text-h1: clamp(2.25rem, 5vw, 3.75rem);
+  --text-h1--line-height: 1.1;
+  --text-h2: clamp(1.75rem, 3.5vw, 2.5rem);
+  --text-h2--line-height: 1.15;
+  --text-h3: 1.25rem;
+  --text-h3--line-height: 1.3;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-moon);
+    outline-offset: 2px;
+  }
+}
+
+/* Accessibility: honor the user's motion preference (docs/02, docs/05). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

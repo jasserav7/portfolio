@@ -3,10 +3,11 @@ interface Props {
   href?: string;
   variant?: "primary" | "secondary";
   type?: "button" | "submit";
+  download?: boolean;
   class?: string;
 }
 
-const { href, variant = "primary", type = "button", class: className } = Astro.props;
+const { href, variant = "primary", type = "button", download, class: className } = Astro.props;
 
 const base =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-colors duration-150";
@@ -19,7 +20,7 @@ const variants = {
 
 {
   href ? (
-    <a href={href} class:list={[base, variants[variant], className]}>
+    <a href={href} download={download} class:list={[base, variants[variant], className]}>
       <slot />
     </a>
   ) : (

@@ -17,6 +17,8 @@
   --color-accent: #b84a52;
   --color-accent-soft: #d9656d;
   --color-moon: #e02d2d;
+  /* Moon gradient stop used by the hero — docs/02-DISENO.md (Hero). */
+  --color-moon-deep: #8f1d1d;
   --color-glow: rgba(224, 45, 45, 0.35);
   --color-ambient: #3a0a0c;
 

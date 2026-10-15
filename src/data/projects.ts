@@ -55,7 +55,7 @@ export const projects: Project[] = [
     description:
       "Tienda con catálogo filtrable, carrito lateral, selector de moneda (COP, USD, EUR y otras) y un estudio de personalización de camisetas con vista previa en vivo.",
     stack: ["HTML", "CSS", "JavaScript"],
-    role: "PENDIENTE",
+    role: "Proyecto individual.",
     status: "completed",
     featured: false,
     repoUrl: "https://github.com/jasserav7/e-commerce-wwide",
@@ -71,7 +71,7 @@ export const projects: Project[] = [
     description:
       "API con autenticación que importa archivos CSV de clientes e informa cuántas filas son válidas, inválidas o duplicadas, con el detalle del error por fila.",
     stack: ["FastAPI", "PostgreSQL", "Python"],
-    role: "PENDIENTE",
+    role: "Proyecto individual.",
     status: "completed",
     featured: false,
     repoUrl: "https://github.com/jasserav7/dataflow",
@@ -86,7 +86,7 @@ export const projects: Project[] = [
     description:
       "Backend de microservicios para una tienda de calzado, con inicio de sesión, catálogo, carrito con IVA y pedidos.",
     stack: ["FastAPI", "MySQL", "Python"],
-    role: "PENDIENTE",
+    role: "Prueba técnica individual.",
     status: "completed",
     featured: false,
     repoUrl: "https://github.com/jasserav7/prueba-tecnica-backend",

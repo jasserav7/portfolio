@@ -1,35 +1,24 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 
 const siteTitle = "Jasser Arrieta — Desarrollador Full-Stack";
 const siteDescription =
   "Desarrollador de Software Full-Stack en Barranquilla, Colombia. Proyectos con Python, FastAPI, React y TypeScript.";
 
-/*
- * Fase 1: secciones vacías con título provisional. Los títulos salen del
- * borrador de docs/03-CONTENIDO.md y el contenido llega en las Fases 2 a 4.
- */
+/* Fases 3 y 4: secciones todavía sin contenido. */
 const sections = [
-  {
-    id: "inicio",
-    label: "Inicio",
-    title: "Desarrollador de Software Full-Stack",
-    level: "h1" as const,
-  },
-  {
-    id: "sobre-mi",
-    label: "Sobre mí",
-    title: "Un desarrollador que termina lo que empieza",
-    level: "h2" as const,
-  },
-  { id: "proyectos", label: "Proyectos", title: "Lo que he construido", level: "h2" as const },
-  { id: "stack", label: "Stack", title: "Con qué trabajo", level: "h2" as const },
-  { id: "contacto", label: "Contacto", title: "¿Hablamos?", level: "h2" as const },
+  { id: "proyectos", label: "Proyectos", title: "Lo que he construido" },
+  { id: "stack", label: "Stack", title: "Con qué trabajo" },
+  { id: "contacto", label: "Contacto", title: "¿Hablamos?" },
 ];
 ---
 
 <Layout title={siteTitle} description={siteDescription}>
+  <Hero />
+  <About />
   {
     sections.map((section) => (
       <section
@@ -39,7 +28,6 @@ const sections = [
       >
         <div class="mx-auto max-w-6xl px-4 md:px-6">
           <SectionHeading
-            level={section.level}
             label={section.label}
             title={section.title}
             headingId={`${section.id}-titulo`}

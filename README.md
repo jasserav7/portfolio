@@ -2,6 +2,8 @@
 
 Sitio web personal de Jasser Arrieta Villa, Desarrollador de Software Full-Stack en Barranquilla, Colombia. Reúne su perfil, sus proyectos y un caso de estudio de Turnos.
 
+Disponible en español (`/`) y en inglés (`/en/`), con botón para cambiar de idioma.
+
 Sitio: https://jasserav7.online
 
 ## Stack
@@ -20,7 +22,8 @@ npm run check     # verificación de tipos
 
 ## Estructura
 
-- `src/data/`: contenido (perfil, proyectos, stack y caso de estudio).
+- `src/i18n/`: textos de la interfaz y rutas en español e inglés.
+- `src/data/`: contenido en ambos idiomas (perfil, proyectos, stack y caso de estudio).
 - `src/components/`: componentes de la interfaz.
 - `src/pages/`: página de inicio, página 404 y caso de estudio.
 - `src/layouts/`: diseño base con metadatos y SEO.

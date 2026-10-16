@@ -1,5 +1,13 @@
 ---
-import { profile } from "../data/profile";
+import { getProfile } from "../data/profile";
+import type { Lang } from "../i18n";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "es" } = Astro.props;
+const profile = getProfile(lang);
 
 const year = new Date().getFullYear();
 

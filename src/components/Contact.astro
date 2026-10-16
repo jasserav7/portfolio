@@ -9,7 +9,16 @@ import SectionHeading from "./SectionHeading.astro";
 import Button from "./Button.astro";
 import GithubIcon from "./icons/GithubIcon.astro";
 import LinkedinIcon from "./icons/LinkedinIcon.astro";
-import { profile } from "../data/profile";
+import { getProfile } from "../data/profile";
+import { ui, type Lang } from "../i18n";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "es" } = Astro.props;
+const t = ui[lang];
+const profile = getProfile(lang);
 
 const secondaryButton =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-colors duration-150 border border-accent text-text hover:border-moon hover:text-accent-soft";
@@ -28,31 +37,34 @@ const socialLinks = [
 >
   <div class="mx-auto max-w-6xl px-4 md:px-6">
     <SectionHeading
-      label="Contacto"
-      title="¿Hablamos?"
+      label={t.contact.label}
+      title={t.contact.title}
       headingId="contacto-titulo"
     />
     <p class="mt-5 max-w-prose text-muted">
-      Estoy disponible para oportunidades de desarrollo de software. Escríbeme y conversamos.
+      {t.contact.text}
     </p>
 
     <div class="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
-      <Button href={`mailto:${profile.email}`} class="w-full sm:w-auto">Escribir un correo</Button>
+      <Button href={`mailto:${profile.email}`} class="w-full sm:w-auto">{t.contact.writeEmail}</Button>
       <button
         type="button"
         data-copy-button
         data-copy-email={profile.email}
+        data-copied-label={t.contact.copied}
+        data-copied-status={t.contact.copiedStatus}
+        data-error-status={t.contact.copyError}
         style="display:none"
         class:list={[secondaryButton, "w-full sm:w-auto"]}
       >
-        <span data-copy-label>Copiar correo</span>
+        <span data-copy-label>{t.contact.copyEmail}</span>
       </button>
     </div>
 
     <p data-copy-status aria-live="polite" class="mt-3 min-h-6 text-sm text-accent-soft"></p>
 
     <p class="mt-6 text-sm text-muted">
-      Correo: <a
+      {t.contact.emailLabel}<a
         href={`mailto:${profile.email}`}
         class="text-accent-soft transition-colors duration-150 hover:text-text">{profile.email}</a
       >

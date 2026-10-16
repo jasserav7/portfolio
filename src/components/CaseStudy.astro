@@ -1,0 +1,271 @@
+---
+/**
+ * Case study page (10-part structure), shared by the Spanish and English routes.
+ * Content comes from src/data/caseStudies.ts and src/data/projects.ts; nothing
+ * is written inside the template.
+ */
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import { getProjects } from "../data/projects";
+import { getCaseStudies } from "../data/caseStudies";
+import { caseStudyPath, homePath, ui, type Lang } from "../i18n";
+
+interface Props {
+  slug: string;
+  lang?: Lang;
+}
+
+const { slug, lang = "es" } = Astro.props;
+const t = ui[lang].caseStudy;
+const study = getCaseStudies(lang).find((item) => item.slug === slug);
+const project = getProjects(lang).find((item) => item.slug === slug);
+
+if (!study || !project) {
+  throw new Error(`Case study not found: ${slug}`);
+}
+
+const projectsHref = `${homePath(lang)}#proyectos`;
+const statusLabel = project.status === "completed" ? t.completed : t.inProgress;
+const isDraft = !study.approved && import.meta.env.DEV;
+
+const pageTitle = `${project.title} — ${t.titleSuffix} | Jasser Arrieta`;
+const pageDescription = study.summary;
+const alternates = { es: caseStudyPath("es", slug), en: caseStudyPath("en", slug) };
+
+const sectionClass = "scroll-mt-24 border-t border-border pt-10";
+const headingClass = "font-display text-h3 font-semibold text-text";
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  ogType="article"
+  lang={lang}
+  alternates={alternates}
+>
+  <article class="mx-auto max-w-3xl px-4 py-16 md:px-6 md:py-24">
+    <a
+      href={projectsHref}
+      class="inline-flex min-h-11 items-center gap-1 text-sm font-medium text-accent-soft transition-colors duration-150 hover:text-text"
+    >
+      <span aria-hidden="true">←</span> {t.backToProjects}
+    </a>
+
+    {
+      isDraft && (
+        <p class="mt-8 rounded-xl border border-border bg-surface-2 px-4 py-3 text-sm text-muted">
+          PENDIENTE: borrador propuesto y pendiente de tu aprobación (solo visible en desarrollo).
+        </p>
+      )
+    }
+
+    <!-- 1. Resumen -->
+    <header class="mt-8">
+      <p class="text-xs font-medium tracking-widest text-accent-soft uppercase">{t.label}</p>
+      <h1 class="mt-3 font-display text-h1 font-semibold text-text">{project.title}</h1>
+      <p class="mt-5 max-w-prose text-muted">{study.summary}</p>
+
+      <dl class="mt-8 flex flex-wrap gap-x-10 gap-y-4">
+        <div class="flex flex-col gap-1">
+          <dt class="text-xs font-medium tracking-widest text-accent-soft uppercase">{t.role}</dt>
+          <dd class="text-sm text-text">{project.role}</dd>
+        </div>
+        <div class="flex flex-col gap-1">
+          <dt class="text-xs font-medium tracking-widest text-accent-soft uppercase">{t.status}</dt>
+          <dd class="text-sm text-text">{statusLabel}</dd>
+        </div>
+      </dl>
+
+      <ul class="mt-8 flex flex-wrap gap-3" aria-label={t.projectLinks}>
+        {
+          project.demoUrl && (
+            <li>
+              <a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex min-h-11 items-center gap-1 text-sm font-medium text-accent-soft transition-colors duration-150 hover:text-text"
+              >
+                {t.viewDemo} <span aria-hidden="true">↗</span>
+              </a>
+            </li>
+          )
+        }
+        <li>
+          <a
+            href={project.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex min-h-11 items-center gap-1 text-sm font-medium text-accent-soft transition-colors duration-150 hover:text-text"
+          >
+            {t.viewCode} <span aria-hidden="true">↗</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="mt-8">
+        <h2 class={headingClass}>{t.stack}</h2>
+        <ul class="mt-4 flex flex-wrap gap-2">
+          {
+            study.techStack.map((tech) => (
+              <li class="rounded-full bg-surface-2 px-3 py-1 text-sm text-muted">{tech}</li>
+            ))
+          }
+        </ul>
+      </div>
+    </header>
+
+    <div class="mt-16 flex flex-col gap-12">
+      <!-- 2. Problema -->
+      <section class={sectionClass} aria-labelledby="problema">
+        <h2 id="problema" class={headingClass}>{t.problem}</h2>
+        <p class="mt-4 max-w-prose text-muted">{study.problem}</p>
+      </section>
+
+      <!-- 3. Solución -->
+      <section class={sectionClass} aria-labelledby="solucion">
+        <h2 id="solucion" class={headingClass}>{t.solution}</h2>
+        <ul class="mt-4 flex list-disc flex-col gap-2 pl-5 text-muted">
+          {study.solution.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+
+      <!-- 4. Roles y flujos -->
+      <section class={sectionClass} aria-labelledby="roles">
+        <h2 id="roles" class={headingClass}>{t.roles}</h2>
+        <dl class="mt-4 flex flex-col gap-4">
+          {
+            study.roles.map((role) => (
+              <div class="rounded-2xl border border-border bg-surface p-5">
+                <dt class="font-medium text-text">{role.name}</dt>
+                <dd class="mt-1 text-muted">{role.abilities}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+
+      <!-- 5. Arquitectura -->
+      <section class={sectionClass} aria-labelledby="arquitectura">
+        <h2 id="arquitectura" class={headingClass}>{t.architecture}</h2>
+        <ol class="mt-4 flex flex-col gap-3">
+          {
+            study.architecture.map((layer, index) => (
+              <li class="rounded-2xl border border-border bg-surface p-5">
+                <p class="font-medium text-text">
+                  <span class="mr-2 text-accent-soft" aria-hidden="true">
+                    {index + 1}.
+                  </span>
+                  {layer.node}
+                </p>
+                <p class="mt-1 text-sm text-muted">{layer.detail}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <!-- 6. Decisiones técnicas -->
+      <section class={sectionClass} aria-labelledby="decisiones">
+        <h2 id="decisiones" class={headingClass}>{t.decisions}</h2>
+        <dl class="mt-4 flex flex-col gap-4">
+          {
+            study.decisions.map((decision) => (
+              <div class="rounded-2xl border border-border bg-surface p-5">
+                <dt class="font-medium text-text">{decision.title}</dt>
+                <dd class="mt-1 text-muted">{decision.rationale}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+
+      <!-- 7. Retos y aprendizajes -->
+      <section class={sectionClass} aria-labelledby="retos">
+        <h2 id="retos" class={headingClass}>{t.challenges}</h2>
+        <dl class="mt-4 flex flex-col gap-4">
+          {
+            study.challenges.map((challenge) => (
+              <div class="rounded-2xl border border-border bg-surface p-5">
+                <dt class="font-medium text-text">{challenge.title}</dt>
+                <dd class="mt-1 text-muted">{challenge.detail}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+
+      <!-- 8. Siguiente paso -->
+      <section class={sectionClass} aria-labelledby="siguiente-paso">
+        <h2 id="siguiente-paso" class={headingClass}>{t.nextSteps}</h2>
+        <ul class="mt-4 flex list-disc flex-col gap-2 pl-5 text-muted">
+          {study.nextSteps.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+
+      <!-- 9. Capturas -->
+      <section class={sectionClass} aria-labelledby="capturas">
+        <h2 id="capturas" class={headingClass}>{t.screenshots}</h2>
+        <div class="mt-6 grid gap-6 sm:grid-cols-2">
+          {
+            study.screenshots.map((shot) => (
+              <figure class="overflow-hidden rounded-2xl border border-border bg-surface">
+                <div class="aspect-video overflow-hidden bg-surface-2">
+                  <Image
+                    src={shot.image}
+                    alt={shot.alt}
+                    widths={[480, 768]}
+                    sizes="(min-width: 640px) 50vw, 100vw"
+                    loading="lazy"
+                    decoding="async"
+                    class="h-full w-full object-cover"
+                  />
+                </div>
+                <figcaption class="px-4 py-3 text-sm text-muted">{shot.caption}</figcaption>
+              </figure>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- 10. Enlaces -->
+      <section class={sectionClass} aria-labelledby="enlaces">
+        <h2 id="enlaces" class={headingClass}>{t.links}</h2>
+        <ul class="mt-4 flex flex-col gap-3">
+          {
+            project.demoUrl && (
+              <li>
+                <a
+                  href={project.demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex min-h-11 items-center gap-1 text-accent-soft transition-colors duration-150 hover:text-text"
+                >
+                  {t.liveDemo} <span aria-hidden="true">↗</span>
+                </a>
+              </li>
+            )
+          }
+          <li>
+            <a
+              href={project.repoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex min-h-11 items-center gap-1 text-accent-soft transition-colors duration-150 hover:text-text"
+            >
+              {t.repository} <span aria-hidden="true">↗</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href={projectsHref}
+              class="inline-flex min-h-11 items-center gap-1 text-accent-soft transition-colors duration-150 hover:text-text"
+            >
+              <span aria-hidden="true">←</span> {t.backToProjects}
+            </a>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </article>
+</Layout>

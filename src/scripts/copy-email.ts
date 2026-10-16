@@ -11,7 +11,10 @@ const copyStatus = document.querySelector<HTMLElement>("[data-copy-status]");
 if (button) {
   const email = button.dataset.copyEmail ?? "";
   const label = button.querySelector<HTMLElement>("[data-copy-label]");
-  const defaultLabel = label?.textContent ?? "Copiar correo";
+  const defaultLabel = label?.textContent ?? "";
+  const copiedLabel = button.dataset.copiedLabel ?? "";
+  const copiedStatus = button.dataset.copiedStatus ?? "";
+  const errorStatus = button.dataset.errorStatus ?? "";
 
   button.style.display = "";
   button.removeAttribute("hidden");
@@ -24,11 +27,11 @@ if (button) {
   button.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(email);
-      if (label) label.textContent = "Copiado";
-      if (copyStatus) copyStatus.textContent = "Correo copiado al portapapeles.";
+      if (label) label.textContent = copiedLabel;
+      if (copyStatus) copyStatus.textContent = copiedStatus;
       window.setTimeout(reset, 2000);
     } catch {
-      if (copyStatus) copyStatus.textContent = "No se pudo copiar. Usa el botón de correo.";
+      if (copyStatus) copyStatus.textContent = errorStatus;
     }
   });
 }

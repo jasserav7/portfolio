@@ -6,7 +6,8 @@ import "@fontsource/poppins/latin-700.css";
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { profile } from "../data/profile";
+import { getProfile } from "../data/profile";
+import { ui, type Lang } from "../i18n";
 
 interface Props {
   title: string;
@@ -15,9 +16,20 @@ interface Props {
   ogType?: "website" | "article";
   /** Hides the page from search engines (used by 404). */
   noindex?: boolean;
+  /** Page language; defaults to Spanish. */
+  lang?: Lang;
+  /**
+   * Paths of this same page in each language. Used for the language button and
+   * the hreflang alternates. Omit on pages that exist in one language only.
+   */
+  alternates?: Record<Lang, string>;
 }
 
-const { title, description, ogType = "website", noindex = false } = Astro.props;
+const { title, description, ogType = "website", noindex = false, lang = "es", alternates } = Astro.props;
+const t = ui[lang];
+const profile = getProfile(lang);
+const altLang: Lang = lang === "es" ? "en" : "es";
+const absolute = (path: string): string => new URL(path, Astro.site).href;
 
 /* Canonical and Open Graph URLs are absolute; they need `site` in astro.config.mjs. */
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
@@ -45,7 +57,7 @@ const personJsonLd = JSON.stringify({
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={t.htmlLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -54,13 +66,22 @@ const personJsonLd = JSON.stringify({
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    {
+      alternates && !noindex && (
+        <>
+          <link rel="alternate" hreflang="es" href={absolute(alternates.es)} />
+          <link rel="alternate" hreflang="en" href={absolute(alternates.en)} />
+          <link rel="alternate" hreflang="x-default" href={absolute(alternates.es)} />
+        </>
+      )
+    }
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={profile.name} />
-    <meta property="og:locale" content="es_CO" />
+    <meta property="og:locale" content={t.ogLocale} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     {!noindex && <meta property="og:url" content={canonical} />}
@@ -89,13 +110,13 @@ const personJsonLd = JSON.stringify({
       href="#contenido"
       class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-surface focus:px-4 focus:py-3 focus:text-text"
     >
-      Saltar al contenido
+      {t.skipToContent}
     </a>
-    <Header />
+    <Header lang={lang} altHref={alternates?.[altLang]} />
     <main id="contenido" class="flex-1 pt-16">
       <slot />
     </main>
-    <Footer />
+    <Footer lang={lang} />
   </body>
 </html>
 

@@ -3,6 +3,8 @@
  * The text lives here, never inside the components.
  */
 
+import type { Lang } from "../i18n";
+
 export interface QuickFact {
   label: string;
   value: string;
@@ -58,3 +60,33 @@ export const profile: Profile = {
     },
   ],
 };
+
+/** English version. Same facts as the Spanish profile; only the wording changes. */
+export const profileEn: Profile = {
+  ...profile,
+  role: "Full-Stack Software Developer",
+  greeting: "Hi, I'm",
+  typedPhrases: [
+    "Full-Stack Software Developer",
+    "APIs with FastAPI and Node.js",
+    "Interfaces with React and TypeScript",
+  ],
+  heroParagraph:
+    "Systems Engineering in Barranquilla, in the process of graduating. I build web applications end to end: API, database and interface.",
+  aboutParagraphs: [
+    "I studied Systems Engineering at Universidad de la Costa (CUC) in Barranquilla, and I am in the process of graduating. I move between backend, frontend and data, with Python as my base language and JavaScript and TypeScript on the web.",
+    "I like building complete projects: modeling the database, exposing an API with authentication and connecting a clear interface. I am motivated by learning new things. I am self-taught and I organize myself well when working on my own.",
+    "I am open to software development opportunities, on-site in Barranquilla or remote.",
+  ],
+  quickFacts: [
+    { label: "Location", value: "Barranquilla, Colombia" },
+    { label: "English", value: "C1 Advanced (EF SET)" },
+    { label: "Education", value: "Systems Engineering, CUC (2022–2026, graduation in progress)" },
+    {
+      label: "Diploma",
+      value: "Software Technologies for Industry 4.0, CUC (August to October 2026)",
+    },
+  ],
+};
+
+export const getProfile = (lang: Lang): Profile => (lang === "es" ? profile : profileEn);

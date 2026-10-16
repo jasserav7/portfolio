@@ -6,6 +6,7 @@
  * notice is gated by `approved` and never appears in production.
  */
 import type { ImageMetadata } from "astro";
+import type { Lang } from "../i18n";
 import bookingFlow from "../assets/projects/turnos-booking-flow.png";
 import providerAgenda from "../assets/projects/turnos-provider-agenda.png";
 import adminDashboard from "../assets/projects/turnos-admin-dashboard.png";
@@ -166,3 +167,131 @@ export const caseStudies: CaseStudy[] = [
     ],
   },
 ];
+
+/** English wording; slug, approval, tech stack and images are shared with the Spanish entry. */
+type CaseStudyText = Omit<CaseStudy, "slug" | "approved" | "techStack" | "screenshots"> & {
+  screenshots: { alt: string; caption: string }[];
+};
+
+const caseStudiesEn: Record<string, CaseStudyText> = {
+  "turnos-booking-platform": {
+    summary: "Multi-role web application where clients book appointments with professionals.",
+    problem:
+      "Coordinating appointments between clients and professionals without schedule clashes: availability rules, confirmation, reminders and different permissions for each type of user.",
+    solution: [
+      "Appointment booking based on the professional's weekly availability and date blocks.",
+      "Booking rescheduling and calendar export in .ics format.",
+      "Booking status flow (pending, confirmed, completed and cancelled) with transactional emails and reminders.",
+      "Admin panel with metrics and downloadable reports in CSV, Excel and PDF.",
+      "Light and dark theme, with responsive design.",
+    ],
+    roles: [
+      {
+        name: "Client",
+        abilities:
+          "Registers and verifies their email, picks a free time slot and books; can see their bookings, reschedule them, add them to their calendar and cancel them in advance.",
+      },
+      {
+        name: "Professional",
+        abilities:
+          "Manages their weekly availability and blocks, sees their agenda by day or week and confirms, cancels or completes the bookings that belong to them.",
+      },
+      {
+        name: "Admin",
+        abilities:
+          "Manages services and users, assigns services to professionals, sees all bookings and their metrics, and downloads reports by date range.",
+      },
+    ],
+    architecture: [
+      { node: "Browser", detail: "The client, the professional or the admin." },
+      { node: "Web", detail: "Vite and React, served as a static frontend." },
+      { node: "API", detail: "FastAPI, with JWT authentication and a refresh cookie." },
+      { node: "Database", detail: "PostgreSQL 16, with SQLAlchemy and Alembic." },
+      { node: "Email", detail: "SMTP service for the transactional emails." },
+    ],
+    decisions: [
+      {
+        title: "Double-booking prevention in the database",
+        rationale:
+          "A PostgreSQL exclusion constraint prevents overlapping pending or confirmed bookings for the same professional, even with simultaneous requests; the violation is translated into a time-slot-unavailable response.",
+      },
+      {
+        title: "Refresh tokens with rotation and reuse detection",
+        rationale:
+          "The refresh token lives in an httpOnly cookie and is rotated on every use; if a revoked one is reused, its whole family is revoked. The access token only exists in the frontend's memory.",
+      },
+      {
+        title: "Slot generation as a pure function",
+        rationale:
+          "The calculation of free slots starts from rules, blocks and bookings without touching the database, which makes it easy to test.",
+      },
+      {
+        title: "Emails outside the transaction",
+        rationale:
+          "Notifications are sent after the booking is committed: an email failure never rolls back a booking.",
+      },
+      {
+        title: "Two-layer authorization",
+        rationale:
+          "The role is enforced in the routers and ownership of the resource is checked in the services.",
+      },
+    ],
+    challenges: [
+      {
+        title: "Avoiding double bookings",
+        detail:
+          "Solved with an exclusion constraint in PostgreSQL, so the database itself guarantees there are no overlaps even when two requests arrive at the same time.",
+      },
+      {
+        title: "Rescheduling without breaking that rule",
+        detail:
+          "The current slot is released inside the same transaction to allow shifts that overlap with the booking itself; if the new slot is not valid, nothing is saved.",
+      },
+      {
+        title: "Security audit",
+        detail:
+          "Findings were fixed such as slot hoarding with unlimited pending bookings and the possibility of booking without verifying the email; each fix is covered by regression tests.",
+      },
+    ],
+    nextSteps: [
+      "Payment gateway and deposits when booking.",
+      "Reminders by SMS or WhatsApp.",
+      "Two-way synchronization with Google Calendar.",
+      "Internationalization and per-user time zone.",
+    ],
+    screenshots: [
+      {
+        alt: "Booking wizard in three steps: service, professional, and day and time.",
+        caption: "Booking an appointment in three steps.",
+      },
+      {
+        alt: "Professional's agenda with day and week views.",
+        caption: "Professional's agenda.",
+      },
+      {
+        alt: "Admin statistics panel with bookings per day and most booked services.",
+        caption: "Admin panel.",
+      },
+      {
+        alt: "Client's list of bookings with their statuses and actions.",
+        caption: "My bookings.",
+      },
+    ],
+  },
+};
+
+export const getCaseStudies = (lang: Lang): CaseStudy[] =>
+  lang === "es"
+    ? caseStudies
+    : caseStudies.map((study) => {
+        const text = caseStudiesEn[study.slug];
+        if (!text) return study;
+        return {
+          ...study,
+          ...text,
+          screenshots: study.screenshots.map((shot, index) => ({
+            image: shot.image,
+            ...text.screenshots[index],
+          })),
+        };
+      });

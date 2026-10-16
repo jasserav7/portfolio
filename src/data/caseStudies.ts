@@ -1,5 +1,5 @@
 /**
- * Case study content — docs/04-PROYECTOS.md (estructura de 10 partes).
+ * Case study content (10-part structure).
  * Everything here comes from the Turnos README on GitHub (read from the repo,
  * not invented). Jasser approved this draft on 2026-10-15, so `approved` is
  * true. While it was false, the page showed a dev-only draft notice; that
@@ -18,9 +18,9 @@ export interface CaseStudyScreenshot {
 }
 
 export interface CaseStudy {
-  /** Must match a Project.slug (docs/04). */
+  /** Must match a Project.slug. */
   slug: string;
-  /** True once Jasser approved the draft (docs/04, "Caso de estudio"). */
+  /** True once the draft is approved; drafts show a notice only in development. */
   approved: boolean;
   summary: string;
   /** Stack as described in the README (more detail than the card chips). */

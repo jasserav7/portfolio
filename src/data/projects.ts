@@ -1,11 +1,10 @@
 /**
- * Project content — docs/04-PROYECTOS.md.
- * The text lives here, never inside the components (AGENTS.md rule 9).
+ * Project content.
+ * The text lives here, never inside the components.
  *
  * `image` is Astro's ImageMetadata (not a string) so the covers go through the
- * Astro image component and get optimized at build time (docs/06, docs/07 fase 3).
- * Only the covers live in src/assets/projects/; the originals stay in
- * docs/<proyecto>/img/ untouched.
+ * Astro image component and get optimized at build time.
+ * Only the covers live in src/assets/projects/.
  */
 import type { ImageMetadata } from "astro";
 import turnosBookingFlow from "../assets/projects/turnos-booking-flow.png";
@@ -19,7 +18,7 @@ export type Project = {
   tagline: string;
   description: string;
   stack: string[];
-  /** Who did what (docs/04): individual project or individual technical test. */
+  /** Who did what: individual project or individual technical test. */
   role: string;
   status: "completed" | "in-progress";
   featured: boolean;

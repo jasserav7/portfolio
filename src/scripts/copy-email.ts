@@ -1,5 +1,5 @@
 /**
- * Copy email button — docs/03-CONTENIDO.md (sección 6) and docs/07 fase 4.
+ * Copy email button.
  * Progressive enhancement: the button starts hidden and is revealed only when
  * this script runs, so it never shows as a dead control without JavaScript.
  * The result is announced through an aria-live region.

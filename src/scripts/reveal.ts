@@ -1,5 +1,5 @@
 /**
- * Scroll reveal — docs/02-DISENO.md (Movimiento) and docs/07 fase 5.
+ * Scroll reveal.
  * Reveals each `[data-reveal]` element once, when it enters the viewport.
  *
  * The hidden state lives behind the `reveal-enabled` class, which the inline

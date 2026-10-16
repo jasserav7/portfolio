@@ -51,7 +51,8 @@ const navItems = [
             <li>
               <a
                 href={item.href}
-                class="block px-2 py-3 text-muted transition-colors duration-150 hover:text-text md:px-0 md:py-2"
+                data-nav-link
+                class="block border-b-2 border-transparent px-2 py-3 text-muted transition-colors duration-150 hover:text-text md:px-0 md:py-2"
               >
                 {item.label}
               </a>
@@ -65,4 +66,13 @@ const navItems = [
 
 <script>
   import "../scripts/mobile-menu.ts";
+  import "../scripts/nav-active.ts";
 </script>
+
+<style>
+  /* Active section link — docs/02-DISENO.md (Navegación): 2 px --moon underline. */
+  [data-nav-link][aria-current="true"] {
+    color: var(--color-text);
+    border-bottom-color: var(--color-moon);
+  }
+</style>

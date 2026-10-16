@@ -1,9 +1,9 @@
 /**
- * Stack and education content — docs/03-CONTENIDO.md (secciones 4 y 5).
- * The text lives here, never inside the components (AGENTS.md rule 9).
+ * Stack and education content.
+ * The text lives here, never inside the components.
  *
  * `core: true` marks the base technologies (★), the only ones with more
- * visual weight. No skill bars or percentages anywhere (docs/03, docs/07).
+ * visual weight. No skill bars or percentages anywhere.
  */
 
 export interface Skill {
@@ -75,7 +75,7 @@ export interface EducationItem {
 }
 
 /**
- * Formation block placed under the Stack section (docs/03, sección 5).
+ * Formation block placed under the Stack section.
  * The EF SET certificate link is pending and optional, so it is omitted.
  */
 export const education: EducationItem[] = [

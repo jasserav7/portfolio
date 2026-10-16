@@ -1,5 +1,5 @@
 /**
- * Typing effect for the hero headline — docs/02-DISENO.md (Movimiento).
+ * Typing effect for the hero headline.
  * The first phrase is rendered by the server, so the line stays readable
  * without JavaScript and when the user prefers reduced motion.
  *

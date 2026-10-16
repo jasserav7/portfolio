@@ -1,5 +1,5 @@
 /**
- * Active section highlight — docs/02-DISENO.md (Navegación) and fase 5.
+ * Active section highlight.
  * Marks the header link that matches the section currently most visible in
  * the viewport with `aria-current="true"`. The underline itself is CSS.
  *

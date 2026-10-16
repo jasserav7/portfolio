@@ -1,6 +1,6 @@
 /**
- * Profile content — docs/03-CONTENIDO.md (secciones 1 y 2).
- * The text lives here, never inside the components (AGENTS.md rule 9).
+ * Profile content.
+ * The text lives here, never inside the components.
  */
 
 export interface QuickFact {

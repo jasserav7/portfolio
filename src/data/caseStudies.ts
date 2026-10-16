@@ -1,11 +1,9 @@
 /**
  * Case study content — docs/04-PROYECTOS.md (estructura de 10 partes).
  * Everything here comes from the Turnos README on GitHub (read from the repo,
- * not invented). It is a proposal for Jasser's approval, so `approved` stays
- * false until he confirms it; the page shows a dev-only draft note until then.
- *
- * `approved: false` never hides content in production — the 10 parts are always
- * published. It only controls the development notice.
+ * not invented). Jasser approved this draft on 2026-10-15, so `approved` is
+ * true. While it was false, the page showed a dev-only draft notice; that
+ * notice is gated by `approved` and never appears in production.
  */
 import type { ImageMetadata } from "astro";
 import bookingFlow from "../assets/projects/turnos-booking-flow.png";
@@ -22,7 +20,7 @@ export interface CaseStudyScreenshot {
 export interface CaseStudy {
   /** Must match a Project.slug (docs/04). */
   slug: string;
-  /** Proposal pending Jasser's approval (docs/04, "Caso de estudio"). */
+  /** True once Jasser approved the draft (docs/04, "Caso de estudio"). */
   approved: boolean;
   summary: string;
   /** Stack as described in the README (more detail than the card chips). */
@@ -43,7 +41,7 @@ export interface CaseStudy {
 export const caseStudies: CaseStudy[] = [
   {
     slug: "turnos-booking-platform",
-    approved: false,
+    approved: true,
     summary:
       "Aplicación web multi-rol donde los clientes reservan citas con profesionales.",
     techStack: [

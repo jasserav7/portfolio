@@ -6,6 +6,8 @@
  * visual weight. No skill bars or percentages anywhere.
  */
 
+import type { Lang } from "../i18n";
+
 export interface Skill {
   name: string;
   core: boolean;
@@ -92,3 +94,34 @@ export const education: EducationItem[] = [
     detail: "Febrero de 2026.",
   },
 ];
+
+const areasEn: Record<string, string> = {
+  Lenguajes: "Languages",
+  Backend: "Backend",
+  Frontend: "Frontend",
+  Datos: "Data",
+  "Cloud y herramientas": "Cloud and tools",
+};
+
+export const getSkillGroups = (lang: Lang): SkillGroup[] =>
+  lang === "es"
+    ? skillGroups
+    : skillGroups.map((group) => ({ ...group, area: areasEn[group.area] ?? group.area }));
+
+const educationEn: EducationItem[] = [
+  {
+    title: "Systems Engineering — Universidad de la Costa (CUC)",
+    detail: "2022–2026. Curriculum completed, graduation in progress.",
+  },
+  {
+    title: "Diploma in Software Technologies for Industry 4.0 — Universidad de la Costa (CUC)",
+    detail: "August to October 2026.",
+  },
+  {
+    title: "EF SET English: C1 Advanced",
+    detail: "February 2026.",
+  },
+];
+
+export const getEducation = (lang: Lang): EducationItem[] =>
+  lang === "es" ? education : educationEn;

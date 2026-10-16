@@ -7,6 +7,7 @@
  * Only the covers live in src/assets/projects/.
  */
 import type { ImageMetadata } from "astro";
+import type { Lang } from "../i18n";
 import turnosBookingFlow from "../assets/projects/turnos-booking-flow.png";
 import wwidemarketHero from "../assets/projects/wwidemarket-hero.webp";
 import dataflowSwaggerEndpoints from "../assets/projects/dataflow-swagger-endpoints.webp";
@@ -95,3 +96,45 @@ export const projects: Project[] = [
     caseStudy: false,
   },
 ];
+
+/** English wording for the text fields; everything else is shared. */
+const projectsEn: Record<
+  string,
+  Pick<Project, "tagline" | "description" | "role" | "imageAlt">
+> = {
+  "turnos-booking-platform": {
+    tagline: "Booking platform with multiple roles.",
+    description:
+      "Web application to manage bookings with JWT authentication, role-based permissions and email notifications.",
+    role: "Individual project.",
+    imageAlt: "Turnos booking wizard in three steps: service, professional and time slot.",
+  },
+  wwidemarket: {
+    tagline: "Online store with product customization.",
+    description:
+      "Store with a filterable catalog, side cart, currency selector (COP, USD, EUR and others) and a T-shirt customization studio with live preview.",
+    role: "Individual project.",
+    imageAlt:
+      "Cover of the practice store WWIDEMARKET in black and gold with the headline “Viste Tu Mundo”.",
+  },
+  dataflow: {
+    tagline: "Customer import and validation from CSV.",
+    description:
+      "API with authentication that imports customer CSV files and reports how many rows are valid, invalid or duplicated, with the error detail for each row.",
+    role: "Individual project.",
+    imageAlt: "DataFlow Swagger documentation with the authentication and imports endpoints.",
+  },
+  "stryde-backend": {
+    tagline: "Microservices backend.",
+    description:
+      "Microservices backend for a footwear store, with login, catalog, cart with VAT and orders.",
+    role: "Individual technical test.",
+    imageAlt:
+      "STRYDE catalog with side menu, search box, category filters and product cards showing base price and 19 % VAT.",
+  },
+};
+
+export const getProjects = (lang: Lang): Project[] =>
+  lang === "es"
+    ? projects
+    : projects.map((project) => ({ ...project, ...projectsEn[project.slug] }));

@@ -10,12 +10,15 @@
  */
 import { Image } from "astro:assets";
 import type { Project } from "../data/projects";
+import { caseStudyPath, ui, type Lang } from "../i18n";
 
 interface Props {
   project: Project;
+  lang?: Lang;
 }
 
-const { project } = Astro.props;
+const { project, lang = "es" } = Astro.props;
+const t = ui[lang].projects;
 const { slug, title, tagline, description, stack, repoUrl, demoUrl, image, imageAlt, featured, caseStudy } =
   project;
 
@@ -50,7 +53,7 @@ const caseStudyClass =
       <p class="text-muted">{description}</p>
     </div>
 
-    <ul class="flex flex-wrap gap-2" aria-label={`Tecnologías de ${title}`}>
+    <ul class="flex flex-wrap gap-2" aria-label={t.techOf(title)}>
       {
         stack.map((tech) => (
           <li class="rounded-full bg-surface-2 px-3 py-1 text-sm text-muted">{tech}</li>
@@ -61,8 +64,8 @@ const caseStudyClass =
     <div class="mt-auto flex flex-wrap items-center gap-6 pt-1">
       {
         caseStudy && (
-          <a href={`/proyectos/${slug}/`} class={caseStudyClass}>
-            Caso de estudio<span class="sr-only"> de {title}</span>
+          <a href={caseStudyPath(lang, slug)} class={caseStudyClass}>
+            {t.caseStudy}<span class="sr-only">{t.of(title)}</span>
             <span aria-hidden="true">→</span>
           </a>
         )
@@ -70,7 +73,7 @@ const caseStudyClass =
       {
         demoUrl && (
           <a href={demoUrl} class={linkClass} target="_blank" rel="noopener noreferrer">
-            Demo<span class="sr-only"> de {title}</span>
+            {t.demo}<span class="sr-only">{t.of(title)}</span>
             <span aria-hidden="true" class="text-accent-soft">
               ↗
             </span>
@@ -78,7 +81,7 @@ const caseStudyClass =
         )
       }
       <a href={repoUrl} class={linkClass} target="_blank" rel="noopener noreferrer">
-        Código<span class="sr-only"> de {title} en GitHub</span>
+        {t.code}<span class="sr-only">{t.onGithub(title)}</span>
         <span aria-hidden="true" class="text-accent-soft">
           ↗
         </span>

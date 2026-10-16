@@ -1,6 +1,15 @@
 ---
 import SectionHeading from "./SectionHeading.astro";
-import { profile } from "../data/profile";
+import { getProfile } from "../data/profile";
+import { ui, type Lang } from "../i18n";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "es" } = Astro.props;
+const t = ui[lang];
+const profile = getProfile(lang);
 ---
 
 <section
@@ -11,8 +20,8 @@ import { profile } from "../data/profile";
 >
   <div class="mx-auto max-w-6xl px-4 md:px-6">
     <SectionHeading
-      label="Sobre mí"
-      title="Un desarrollador que termina lo que empieza"
+      label={t.about.label}
+      title={t.about.title}
       headingId="sobre-mi-titulo"
     />
 

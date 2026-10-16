@@ -1,29 +1,48 @@
 ---
-import { profile } from "../data/profile";
+import { getProfile } from "../data/profile";
+import { homePath, ui, type Lang } from "../i18n";
 
-const navItems = [
-  { href: "/#inicio", label: "Inicio" },
-  { href: "/#sobre-mi", label: "Sobre mí" },
-  { href: "/#proyectos", label: "Proyectos" },
-  { href: "/#stack", label: "Stack" },
-  { href: "/#contacto", label: "Contacto" },
-];
+interface Props {
+  lang?: Lang;
+  /** Path of the current page in the other language (target of the language button). */
+  altHref?: string;
+}
+
+const { lang = "es", altHref } = Astro.props;
+const t = ui[lang];
+const profile = getProfile(lang);
+const home = homePath(lang);
+const navItems = t.nav.items.map((item) => ({ href: `${home}#${item.id}`, label: item.label }));
 ---
 
 <header class="fixed inset-x-0 top-0 z-40 border-b border-border bg-bg/80 backdrop-blur-sm">
   <div class="mx-auto flex min-h-16 max-w-6xl flex-wrap items-center gap-y-2 px-4 md:px-6">
-    <a href="/#inicio" class="font-display text-lg font-semibold tracking-tight text-text">
+    <a href={`${home}#inicio`} class="font-display text-lg font-semibold tracking-tight text-text">
       {profile.brandName}<span class="text-accent" aria-hidden="true">.</span>
     </a>
 
+    {
+      altHref && (
+        <a
+          href={altHref}
+          hreflang={t.langSwitch.hrefLang}
+          lang={t.langSwitch.hrefLang}
+          data-lang-switch
+          aria-label={t.langSwitch.label}
+          class="ml-auto inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-border px-3 text-sm font-medium tracking-wide text-muted transition-colors duration-150 hover:border-accent hover:text-text md:order-last md:ml-6"
+        >
+          {t.langSwitch.code}
+        </a>
+      )
+    }
     <button
       type="button"
       data-menu-toggle
       aria-expanded="false"
       aria-controls="menu-principal"
-      class="ml-auto inline-flex size-11 items-center justify-center rounded-lg text-muted transition-colors duration-150 hover:text-text md:hidden"
+      class="ml-2 inline-flex size-11 items-center justify-center rounded-lg text-muted transition-colors duration-150 hover:text-text md:hidden"
     >
-      <span class="sr-only">Menú</span>
+      <span class="sr-only">{t.nav.menu}</span>
       <svg
         aria-hidden="true"
         focusable="false"
@@ -42,7 +61,7 @@ const navItems = [
     <nav
       id="menu-principal"
       data-menu-panel
-      aria-label="Navegación principal"
+      aria-label={t.nav.ariaLabel}
       class="hidden w-full md:ml-auto md:flex md:w-auto md:items-center"
     >
       <ul class="flex flex-col pb-3 md:flex-row md:items-center md:gap-6 md:pb-0">

@@ -4,8 +4,17 @@ import Button from "./Button.astro";
 import GithubIcon from "./icons/GithubIcon.astro";
 import LinkedinIcon from "./icons/LinkedinIcon.astro";
 import MailIcon from "./icons/MailIcon.astro";
-import { profile } from "../data/profile";
+import { getProfile } from "../data/profile";
+import { ui, type Lang } from "../i18n";
 import portrait from "../assets/pfp.jpeg";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "es" } = Astro.props;
+const t = ui[lang];
+const profile = getProfile(lang);
 
 /* First phrase is rendered by the server so it survives without JavaScript. */
 const [firstPhrase] = profile.typedPhrases;
@@ -59,7 +68,7 @@ const [firstPhrase] = profile.typedPhrases;
           <li>
             <a
               href={`mailto:${profile.email}`}
-              aria-label="Correo electrónico"
+              aria-label={t.hero.emailAria}
               class="inline-flex size-11 items-center justify-center rounded-full border border-border text-muted transition-colors duration-150 hover:border-accent hover:text-text"
             >
               <MailIcon />
@@ -68,9 +77,9 @@ const [firstPhrase] = profile.typedPhrases;
         </ul>
 
         <div class="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
-          <Button href="#proyectos" class="w-full sm:w-auto">Ver proyectos</Button>
+          <Button href="#proyectos" class="w-full sm:w-auto">{t.hero.viewProjects}</Button>
           <Button href={profile.cvUrl} variant="secondary" download class="w-full sm:w-auto">
-            Descargar CV (PDF)
+            {t.hero.downloadCv}
           </Button>
         </div>
       </div>
@@ -79,7 +88,7 @@ const [firstPhrase] = profile.typedPhrases;
         <div class="moon" aria-hidden="true"></div>
         <Image
           src={portrait}
-          alt={`Retrato de ${profile.name}`}
+          alt={t.hero.portraitAlt(profile.name)}
           widths={[256, 384, 512, 768]}
           sizes="(min-width: 1024px) 24rem, 16rem"
           class="relative size-full rounded-[50%] bg-surface-2 object-cover"

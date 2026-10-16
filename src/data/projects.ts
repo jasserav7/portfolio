@@ -19,7 +19,7 @@ export type Project = {
   tagline: string;
   description: string;
   stack: string[];
-  /** Who did what. `PENDIENTE` until Jasser confirms it (docs/04). */
+  /** Who did what (docs/04): individual project or individual technical test. */
   role: string;
   status: "completed" | "in-progress";
   featured: boolean;

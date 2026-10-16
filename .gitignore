@@ -17,3 +17,6 @@ yarn-error.log*
 # Sistema operativo y editor
 .DS_Store
 Thumbs.db
+
+# Documentacion interna (solo local)
+docs/

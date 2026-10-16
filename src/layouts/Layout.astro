@@ -1,5 +1,4 @@
 ---
-import { existsSync } from "node:fs";
 import "@fontsource/inter/latin-400.css";
 import "@fontsource/inter/latin-500.css";
 import "@fontsource/poppins/latin-600.css";
@@ -23,16 +22,8 @@ const { title, description, ogType = "website", noindex = false } = Astro.props;
 /* Canonical and Open Graph URLs are absolute; they need `site` in astro.config.mjs. */
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 
-/*
- * Favicon and Open Graph image are provided by Jasser (docs/07 fase 5). They
- * are referenced only when the files exist, so the site never links to a
- * missing asset before they are added to public/.
- */
-const publicUrl = (name: string): URL => new URL(`../../public/${name}`, import.meta.url);
-const hasFavicon = existsSync(publicUrl("favicon.svg"));
-const hasAppleIcon = existsSync(publicUrl("apple-touch-icon.png"));
-const hasOgImage = existsSync(publicUrl("og-image.png"));
-const ogImage = hasOgImage ? new URL("og-image.png", Astro.site).href : null;
+const ogImage = new URL("og-image.png", Astro.site).href;
+const ogImageAlt = `${profile.name} — ${profile.role}`;
 
 const personJsonLd = JSON.stringify({
   "@context": "https://schema.org",
@@ -48,7 +39,7 @@ const personJsonLd = JSON.stringify({
     addressCountry: "CO",
   },
   knowsLanguage: ["es", "en"],
-  ...(ogImage ? { image: ogImage } : {}),
+  image: ogImage,
   sameAs: [profile.github, profile.linkedin],
 });
 ---
@@ -64,8 +55,8 @@ const personJsonLd = JSON.stringify({
     <meta name="description" content={description} />
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
 
-    {hasFavicon && <link rel="icon" type="image/svg+xml" href="/favicon.svg" />}
-    {hasAppleIcon && <link rel="apple-touch-icon" href="/apple-touch-icon.png" />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={profile.name} />
@@ -73,15 +64,16 @@ const personJsonLd = JSON.stringify({
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     {!noindex && <meta property="og:url" content={canonical} />}
-    {ogImage && <meta property="og:image" content={ogImage} />}
-    {ogImage && <meta property="og:image:width" content="1200" />}
-    {ogImage && <meta property="og:image:height" content="630" />}
-    {ogImage && <meta property="og:image:alt" content={`${profile.name} — ${profile.role}`} />}
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    {ogImage && <meta name="twitter:image" content={ogImage} />}
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     {/* Adds the reveal class before the first paint, only without reduced motion. */}
     <script is:inline>

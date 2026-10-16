@@ -53,8 +53,8 @@ export const profile: Profile = {
     { label: "Inglés", value: "C1 Advanced (EF SET)" },
     { label: "Formación", value: "Ingeniería de Sistemas, CUC (2022–2026, en proceso de grado)" },
     {
-      label: "Diplomado de AWS",
-      value: "CUC (completado en septiembre de 2026, certificado en trámite)",
+      label: "Diplomado",
+      value: "Tecnologías de Software para la Industria 4.0, CUC (agosto a octubre de 2026)",
     },
   ],
 };

@@ -84,8 +84,8 @@ export const education: EducationItem[] = [
     detail: "2022–2026. Plan de estudios culminado, grado en trámite.",
   },
   {
-    title: "Diplomado de AWS — Universidad de la Costa (CUC)",
-    detail: "Completado el 30 de septiembre de 2026, certificado en trámite.",
+    title: "Diplomado en Tecnologías de Software para la Industria 4.0 — Universidad de la Costa (CUC)",
+    detail: "Agosto a octubre de 2026.",
   },
   {
     title: "EF SET Inglés: C1 Advanced",

@@ -2,6 +2,10 @@
  * Typing effect for the hero headline — docs/02-DISENO.md (Movimiento).
  * The first phrase is rendered by the server, so the line stays readable
  * without JavaScript and when the user prefers reduced motion.
+ *
+ * The animation stops on its own after one full cycle through the phrases
+ * (WCAG 2.2.2, "Pause, Stop, Hide"): it must not keep moving forever while the
+ * user reads the rest of the page. It ends on the last phrase, fully typed.
  */
 
 const TYPE_SPEED = 70;
@@ -43,6 +47,12 @@ if (target && cursor && !reduceMotion.matches) {
       target.textContent = current.slice(0, charIndex);
 
       if (charIndex >= current.length) {
+        /* Last phrase fully typed: one cycle is done, so stop for good. */
+        if (phraseIndex === phrases.length - 1) {
+          cursor.hidden = true;
+          return;
+        }
+
         deleting = true;
         window.setTimeout(tick, HOLD_DELAY);
         return;

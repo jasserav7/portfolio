@@ -6,13 +6,42 @@ import "@fontsource/poppins/latin-700.css";
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { profile } from "../data/profile";
 
 interface Props {
   title: string;
   description: string;
+  /** "article" for case studies; defaults to "website". */
+  ogType?: "website" | "article";
+  /** Hides the page from search engines (used by 404). */
+  noindex?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, ogType = "website", noindex = false } = Astro.props;
+
+/* Canonical and Open Graph URLs are absolute; they need `site` in astro.config.mjs. */
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+const ogImage = new URL("og-image.png", Astro.site).href;
+const ogImageAlt = `${profile.name} — ${profile.role}`;
+
+const personJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  jobTitle: profile.role,
+  url: new URL("/", Astro.site).href,
+  description,
+  email: `mailto:${profile.email}`,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Barranquilla",
+    addressCountry: "CO",
+  },
+  knowsLanguage: ["es", "en"],
+  image: ogImage,
+  sameAs: [profile.github, profile.linkedin],
+});
 ---
 
 <!doctype html>
@@ -21,8 +50,39 @@ const { title, description } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0A0A0B" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={profile.name} />
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {!noindex && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+
+    {/* Adds the reveal class before the first paint, only without reduced motion. */}
+    <script is:inline>
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("reveal-enabled");
+      }
+    </script>
+
+    <script type="application/ld+json" set:html={personJsonLd} />
   </head>
   <body class="flex min-h-dvh flex-col bg-bg text-text">
     <a
@@ -38,3 +98,7 @@ const { title, description } = Astro.props;
     <Footer />
   </body>
 </html>
+
+<script>
+  import "../scripts/reveal.ts";
+</script>

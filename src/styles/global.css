@@ -58,6 +58,28 @@
   }
 }
 
+/*
+ * Scroll reveal — docs/02-DISENO.md (Movimiento).
+ * `reveal-enabled` is added to <html> by an inline script in the head, so the
+ * hidden state is applied before the first paint (no flash of hidden content).
+ * Without JavaScript the class is never added and everything stays visible.
+ * Only enabled when the user has not asked for reduced motion.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-enabled [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+    transition:
+      opacity 400ms ease,
+      transform 400ms ease;
+  }
+
+  .reveal-enabled [data-reveal].is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Accessibility: honor the user's motion preference (docs/02, docs/05). */
 @media (prefers-reduced-motion: reduce) {
   *,

@@ -25,6 +25,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "Python", core: true },
       { name: "TypeScript", core: true },
       { name: "JavaScript", core: false },
+      { name: "C#", core: false },
       { name: "SQL", core: false },
     ],
   },
@@ -37,6 +38,14 @@ export const skillGroups: SkillGroup[] = [
       { name: "APIs REST", core: false },
       { name: "JWT", core: false },
       { name: "Zod", core: false },
+    ],
+  },
+  {
+    area: ".NET",
+    items: [
+      { name: "ASP.NET Core Web API", core: false },
+      { name: "Entity Framework Core", core: false },
+      { name: "LINQ", core: false },
     ],
   },
   {
@@ -90,6 +99,10 @@ export const education: EducationItem[] = [
     detail: "Agosto a octubre de 2026.",
   },
   {
+    title: "Cisco: Python Essentials 1 y 2",
+    detail: "Octubre de 2026.",
+  },
+  {
     title: "EF SET Inglés: C1 Advanced",
     detail: "Febrero de 2026.",
   },
@@ -116,6 +129,10 @@ const educationEn: EducationItem[] = [
   {
     title: "Diploma in Software Technologies for Industry 4.0 — Universidad de la Costa (CUC)",
     detail: "August to October 2026.",
+  },
+  {
+    title: "Cisco: Python Essentials 1 and 2",
+    detail: "October 2026.",
   },
   {
     title: "EF SET English: C1 Advanced",

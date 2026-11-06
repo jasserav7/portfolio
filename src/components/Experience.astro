@@ -1,0 +1,50 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import { getExperience } from "../data/experience";
+import { ui, type Lang } from "../i18n";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "es" } = Astro.props;
+const t = ui[lang];
+const items = getExperience(lang);
+---
+
+<section
+  id="experiencia"
+  aria-labelledby="experiencia-titulo"
+  data-reveal
+  class="scroll-mt-24 py-20 md:py-28"
+>
+  <div class="mx-auto max-w-6xl px-4 md:px-6">
+    <SectionHeading
+      label={t.experience.label}
+      title={t.experience.title}
+      headingId="experiencia-titulo"
+    />
+
+    <div class="mt-12 flex flex-col gap-6">
+      {
+        items.map((item) => (
+          <article class="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-6">
+            <div class="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-6">
+              <h3 class="font-display text-h3 font-semibold text-text">{item.role}</h3>
+              <p class="text-sm text-accent-soft">{item.period}</p>
+            </div>
+            <p class="text-text">{item.company}</p>
+            <ul class="flex max-w-prose list-disc flex-col gap-2 pl-5 text-muted marker:text-accent-soft">
+              {item.bullets.map((bullet) => <li>{bullet}</li>)}
+            </ul>
+            <ul class="flex flex-wrap gap-2" aria-label={t.experience.techLabel}>
+              {item.stack.map((tech) => (
+                <li class="rounded-full bg-surface-2 px-3 py-1 text-sm text-muted">{tech}</li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

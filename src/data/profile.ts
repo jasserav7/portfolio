@@ -64,6 +64,7 @@ export const profile: Profile = {
 /** English version. Same facts as the Spanish profile; only the wording changes. */
 export const profileEn: Profile = {
   ...profile,
+  cvUrl: "/cv/Jasser-Arrieta-CV-EN.pdf",
   role: "Full-Stack Software Developer",
   greeting: "Hi, I'm",
   typedPhrases: [

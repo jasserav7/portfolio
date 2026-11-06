@@ -34,6 +34,7 @@ export interface UiStrings {
     portraitAlt: (name: string) => string;
   };
   about: { label: string; title: string };
+  experience: { label: string; title: string; techLabel: string };
   projects: {
     label: string;
     title: string;
@@ -97,6 +98,7 @@ export const ui: Record<Lang, UiStrings> = {
       items: [
         { id: "inicio", label: "Inicio" },
         { id: "sobre-mi", label: "Sobre mí" },
+        { id: "experiencia", label: "Experiencia" },
         { id: "proyectos", label: "Proyectos" },
         { id: "stack", label: "Stack" },
         { id: "contacto", label: "Contacto" },
@@ -110,6 +112,7 @@ export const ui: Record<Lang, UiStrings> = {
       portraitAlt: (name) => `Retrato de ${name}`,
     },
     about: { label: "Sobre mí", title: "Un desarrollador que termina lo que empieza" },
+    experience: { label: "Experiencia", title: "Dónde he trabajado", techLabel: "Tecnologías" },
     projects: {
       label: "Proyectos",
       title: "Lo que he construido",
@@ -176,6 +179,7 @@ export const ui: Record<Lang, UiStrings> = {
       items: [
         { id: "inicio", label: "Home" },
         { id: "sobre-mi", label: "About" },
+        { id: "experiencia", label: "Experience" },
         { id: "proyectos", label: "Projects" },
         { id: "stack", label: "Stack" },
         { id: "contacto", label: "Contact" },
@@ -189,6 +193,7 @@ export const ui: Record<Lang, UiStrings> = {
       portraitAlt: (name) => `Portrait of ${name}`,
     },
     about: { label: "About", title: "A developer who finishes what they start" },
+    experience: { label: "Experience", title: "Where I have worked", techLabel: "Technologies" },
     projects: {
       label: "Projects",
       title: "What I have built",

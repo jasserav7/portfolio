@@ -89,8 +89,9 @@ const [firstPhrase] = profile.typedPhrases;
         <Image
           src={portrait}
           alt={t.hero.portraitAlt(profile.name)}
-          widths={[256, 384, 512, 768]}
-          sizes="(min-width: 1024px) 24rem, 16rem"
+          widths={[320, 480, 640, 800, 1000]}
+          sizes="(min-width: 1024px) 30rem, (min-width: 640px) 20rem, 17.5rem"
+          quality={90}
           class="relative size-full rounded-[50%] bg-surface-2 object-cover"
           loading="eager"
           fetchpriority="high"

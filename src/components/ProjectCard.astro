@@ -35,15 +35,26 @@ const caseStudyClass =
   ]}
 >
   <div class="aspect-video overflow-hidden bg-surface-2">
-    <Image
-      src={image}
-      alt={imageAlt}
-      widths={[480, 768, 1120]}
-      sizes="(min-width: 768px) 50vw, 100vw"
-      loading="lazy"
-      decoding="async"
-      class="h-full w-full object-cover"
-    />
+    {
+      image ? (
+        <Image
+          src={image}
+          alt={imageAlt}
+          widths={[480, 768, 1120]}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-cover"
+        />
+      ) : (
+        <div
+          aria-hidden="true"
+          class="flex h-full w-full items-center justify-center font-display text-3xl font-semibold tracking-tight text-muted"
+        >
+          {stack.slice(0, 2).join(" · ")}
+        </div>
+      )
+    }
   </div>
 
   <div class="flex flex-1 flex-col gap-5 p-6">

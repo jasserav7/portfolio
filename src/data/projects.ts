@@ -26,7 +26,8 @@ export type Project = {
   repoUrl: string;
   /** If absent, the "Demo" link is not rendered. */
   demoUrl?: string;
-  image: ImageMetadata;
+  /** Optional: projects without a real screenshot render a neutral placeholder. */
+  image?: ImageMetadata;
   imageAlt: string;
   caseStudy: boolean;
 };
@@ -47,6 +48,20 @@ export const projects: Project[] = [
     image: turnosBookingFlow,
     imageAlt: "Asistente de reserva de Turnos en tres pasos: servicio, profesional y horario.",
     caseStudy: true,
+  },
+  {
+    slug: "carrental-api",
+    title: "CarRental API",
+    tagline: "API REST de alquiler de autos.",
+    description:
+      "CRUD de autos y usuarios y módulo de alquileres con validación de fechas, detección de solapamientos y cálculo automático del precio total.",
+    stack: ["C#", ".NET 10", "SQL Server", "EF Core"],
+    role: "Proyecto individual.",
+    status: "completed",
+    featured: false,
+    repoUrl: "https://github.com/jasserav7/CarRentalAPI",
+    imageAlt: "",
+    caseStudy: false,
   },
   {
     slug: "wwidemarket",
@@ -108,6 +123,13 @@ const projectsEn: Record<
       "Web application to manage bookings with JWT authentication, role-based permissions and email notifications.",
     role: "Individual project.",
     imageAlt: "Turnos booking wizard in three steps: service, professional and time slot.",
+  },
+  "carrental-api": {
+    tagline: "Car rental REST API.",
+    description:
+      "CRUD for cars and users and a rentals module with date validation, overlap detection and automatic total price calculation.",
+    role: "Individual project.",
+    imageAlt: "",
   },
   wwidemarket: {
     tagline: "Online store with product customization.",

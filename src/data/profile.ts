@@ -46,7 +46,7 @@ export const profile: Profile = {
   github: "https://github.com/jasserav7",
   linkedin: "https://www.linkedin.com/in/jasser-arrieta-784406322/",
   aboutParagraphs: [
-    "Estudié Ingeniería de Sistemas en la Universidad de la Costa (CUC), en Barranquilla, y estoy en proceso de grado. Me muevo entre backend, frontend y datos, con Python como lenguaje base y JavaScript y TypeScript en la web.",
+    "Estudié Ingeniería de Sistemas en la Universidad de la Costa (CUC), en Barranquilla, y estoy en proceso de grado. Me muevo entre backend, frontend y datos, con Python como lenguaje base, JavaScript y TypeScript en la web, y C# con .NET para APIs.",
     "Me gusta construir proyectos completos: modelar la base de datos, exponer una API con autenticación y conectar una interfaz clara. Me motiva aprender cosas nuevas. Soy autodidacta y me organizo bien trabajando por mi cuenta.",
     "Estoy abierto a oportunidades de desarrollo de software, presenciales en Barranquilla o remotas.",
   ],
@@ -74,7 +74,7 @@ export const profileEn: Profile = {
   heroParagraph:
     "Systems Engineering in Barranquilla, in the process of graduating. I build web applications end to end: API, database and interface.",
   aboutParagraphs: [
-    "I studied Systems Engineering at Universidad de la Costa (CUC) in Barranquilla, and I am in the process of graduating. I move between backend, frontend and data, with Python as my base language and JavaScript and TypeScript on the web.",
+    "I studied Systems Engineering at Universidad de la Costa (CUC) in Barranquilla, and I am in the process of graduating. I move between backend, frontend and data, with Python as my base language, JavaScript and TypeScript on the web, and C# with .NET for APIs.",
     "I like building complete projects: modeling the database, exposing an API with authentication and connecting a clear interface. I am motivated by learning new things. I am self-taught and I organize myself well when working on my own.",
     "I am open to software development opportunities, on-site in Barranquilla or remote.",
   ],
